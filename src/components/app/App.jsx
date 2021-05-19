@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
+import RouterComponents from '../router-components'
 
-const App = () => <div>hello world!!!</div>
+const App = () => <RouterComponents />
 
 export default App
