@@ -1,0 +1,20 @@
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid red;
+}
+
+.item-container__title {
+  color: rebeccapurple;
+}
+
+.item-container__body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: burlywood;
+}
