@@ -1,4 +1,4 @@
 import MainLayout from './layout'
-import withLayout from '../hoc-helper/with-layout'
+import { withLayout } from '../../hoc'
 
 export default withLayout(MainLayout)
