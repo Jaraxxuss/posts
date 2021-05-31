@@ -12,7 +12,7 @@ const PostContextProvider = ({ children }) => {
         const { data } = await api.posts.getPosts()
         setPosts(data.map((it) => ({ ...it, isFavorite: false })))
       } catch (err) {
-        console.log(err)
+        throw new Error(err.message)
       }
     }
     fetchPosts()
