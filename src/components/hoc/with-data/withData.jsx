@@ -1,6 +1,6 @@
 import React from 'react'
 
-const withData = (getData) => (WrappedComponent) => () => {
+const withData = (getData) => (WrappedComponent) => (props) => {
   const [data, setData] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(true)
 
@@ -20,7 +20,7 @@ const withData = (getData) => (WrappedComponent) => () => {
     return <div>loading...</div>
   }
 
-  return <WrappedComponent data={data} />
+  return React.createElement(WrappedComponent, { data, ...props })
 }
 
 export default withData

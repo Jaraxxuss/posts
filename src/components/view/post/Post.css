@@ -1,0 +1,24 @@
+.post-container {
+  position: relative;
+  width: 33%;
+}
+
+.post-container_fullwidth {
+  width: 100%;
+}
+
+.post-container__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.post-container__button_favorite {
+  background-color: yellow;
+}
+
+@media (max-width: 720px) {
+  .post-container {
+    width: 100%;
+  }
+}

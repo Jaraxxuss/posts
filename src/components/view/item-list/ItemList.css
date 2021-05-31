@@ -1,0 +1,9 @@
+.item-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-list-container__items {
+  display: flex;
+  flex-wrap: wrap;
+}

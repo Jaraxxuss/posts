@@ -1,0 +1,38 @@
+.posts-page-container__posts-wrapper {
+  display: flex;
+}
+
+.posts-page-container__posts {
+  width: 75%;
+  transition: width 1s ease-in-out;
+}
+
+.posts-page-container__posts_fullWidth {
+  width: 100%;
+}
+
+.posts-page-container__favorite-posts {
+  width: 25%;
+  transition: width 1s ease-in-out;
+}
+
+.posts-page-container__favorite-posts_zeroWidth {
+  width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .posts-page-container__posts-wrapper {
+    flex-wrap: wrap;
+  }
+  .posts-page-container__posts {
+    width: 100%;
+  }
+
+  .posts-page-container__favorite-posts {
+    width: 100%;
+  }
+  .posts-page-container__favorite-posts_zeroWidth {
+    width: 0;
+  }
+}

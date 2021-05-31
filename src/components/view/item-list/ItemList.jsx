@@ -2,33 +2,28 @@ import React from 'react'
 import './ItemList.css'
 import PropTypes from 'prop-types'
 
-const ItemList = ({ data, onChangeFavorite, children: renderItem }) => {
-  const items = data.map((item) => {
-    const { id } = item
+const ItemList = ({ items, title, children: renderItem }) => {
+  const mappedItems = items.map((item) => {
     const renderedItem = renderItem(item)
 
-    return (
-      <li key={id}>
-        <div>
-          <button type="button" onClick={() => onChangeFavorite(id)}>
-            change
-          </button>
-        </div>
-        <div>{renderedItem}</div>
-      </li>
-    )
+    return React.cloneElement(renderedItem, { key: item.id })
   })
 
-  return <ul>{items}</ul>
+  return (
+    <div className="item-list-container">
+      <h2>{title}</h2>
+      <div className="item-list-container__items">{mappedItems}</div>
+    </div>
+  )
 }
 
 ItemList.propTypes = {
-  data: PropTypes.arrayOf(
+  items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-    }).isRequired,
+    }),
   ).isRequired,
-  onChangeFavorite: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
 }
 
