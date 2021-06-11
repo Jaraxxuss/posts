@@ -7,3 +7,6 @@
   display: flex;
   flex-wrap: wrap;
 }
+.item-list-container__title {
+  color: green;
+}

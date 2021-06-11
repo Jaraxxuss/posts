@@ -3,34 +3,33 @@ import './Post.css'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-const Post = ({ post, isFullWidthPost, onToggleFavoritePost }) => (
-  <div
-    className={classnames('post-container', {
-      'post-container_fullwidth': isFullWidthPost,
-    })}
-  >
-    <div>{post.title}</div>
-    <div>{post.body}</div>
-    <button
-      className={classnames('post-container__button', {
-        'post-container__button_favorite': post.isFavorite,
-      })}
-      type="button"
-      onClick={() => onToggleFavoritePost(post.id)}
-    >
-      <span>icon</span>
-    </button>
-  </div>
-)
+const Post = ({ title, body, id, isFavorite, onToggleFavoritePost }) => {
+  const onClickFavoriteBtn = () => {
+    onToggleFavoritePost(id)
+  }
+
+  return (
+    <div className="post-container">
+      <h3 className="post-container__title">{title}</h3>
+      <div className="post-container__body">{body}</div>
+      <button
+        className={classnames('post-container__button', {
+          'post-container__button_favorite': isFavorite,
+        })}
+        type="button"
+        onClick={onClickFavoriteBtn}
+      >
+        <span>icon</span>
+      </button>
+    </div>
+  )
+}
 
 Post.propTypes = {
-  post: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-  }).isRequired,
-  isFullWidthPost: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
   onToggleFavoritePost: PropTypes.func.isRequired,
 }
 
