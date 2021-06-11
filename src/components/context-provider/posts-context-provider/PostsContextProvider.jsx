@@ -1,16 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { map, partition, findIndex, concat, slice, nth, merge } from 'lodash'
 import PostsContext from '../../context/posts-context'
 import api from '../../../api'
 
 const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = React.useState([])
 
+  const [favoritePosts, unfavoritePosts] = partition(posts, 'isFavorite')
+
   React.useEffect(() => {
     const fetchPosts = async () => {
       try {
         const { data } = await api.posts.getPosts()
-        setPosts(data.map((it) => ({ ...it, isFavorite: false })))
+        setPosts(map(data, (it) => ({ ...it, isFavorite: false })))
       } catch (err) {
         throw new Error(err.message)
       }
@@ -18,20 +21,21 @@ const PostContextProvider = ({ children }) => {
     fetchPosts()
   }, [])
 
-  const favoritePosts = posts.filter(({ isFavorite }) => isFavorite)
-
   const onToggleFavoritePost = (id) => {
-    const idx = posts.findIndex((it) => it.id === id)
-    setPosts([
-      ...posts.slice(0, idx),
-      { ...posts[idx], isFavorite: !posts[idx].isFavorite },
-      ...posts.slice(idx + 1),
-    ])
+    const idx = findIndex(posts, { id })
+
+    setPosts(
+      concat(
+        slice(posts, 0, idx),
+        merge(nth(posts, idx), { isFavorite: !nth(posts, idx).isFavorite }),
+        slice(posts, idx + 1),
+      ),
+    )
   }
 
   return (
     <PostsContext.Provider
-      value={{ posts, favoritePosts, onToggleFavoritePost }}
+      value={{ favoritePosts, unfavoritePosts, onToggleFavoritePost }}
     >
       {children}
     </PostsContext.Provider>

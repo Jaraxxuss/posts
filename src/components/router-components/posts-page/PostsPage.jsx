@@ -1,27 +1,31 @@
 import React from 'react'
 import './PostsPage.css'
 import classnames from 'classnames'
+import { map } from 'lodash'
 import PostsContext from '../../context'
 import ItemList from '../../view/item-list'
 import Post from '../../view/post'
 
 const PostsPage = () => {
-  const { posts, favoritePosts, onToggleFavoritePost } =
+  const { unfavoritePosts, favoritePosts, onToggleFavoritePost } =
     React.useContext(PostsContext)
 
   const [isFavoritePostsVisible, setIsFavoritePostsVisible] =
     React.useState(false)
 
-  const withPostList = (postsData, title, isFullWidthPost) => () =>
+  const withPostList = (postsData, itemListTitle) => () =>
     (
-      <ItemList items={postsData} title={title}>
-        {(post) => (
+      <ItemList title={itemListTitle}>
+        {map(postsData, ({ id, title, body, isFavorite }) => (
           <Post
-            post={post}
-            isFullWidthPost={isFullWidthPost}
+            key={id}
+            id={id}
+            body={body}
+            isFavorite={isFavorite}
+            title={title}
             onToggleFavoritePost={onToggleFavoritePost}
           />
-        )}
+        ))}
       </ItemList>
     )
 
@@ -29,8 +33,8 @@ const PostsPage = () => {
     setIsFavoritePostsVisible((prev) => !prev)
   }
 
-  const PostList = withPostList(posts, 'Posts', false)
-  const FavoritePostList = withPostList(favoritePosts, 'Favorite Posts', true)
+  const PostList = withPostList(unfavoritePosts, 'Posts')
+  const FavoritePostList = withPostList(favoritePosts, 'Favorite Posts')
 
   return (
     <div>
