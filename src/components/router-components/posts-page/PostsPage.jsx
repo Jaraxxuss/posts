@@ -37,23 +37,30 @@ const PostsPage = () => {
   const FavoritePostList = withPostList(favoritePosts, 'Favorite Posts')
 
   return (
-    <div>
+    <div className="posts-page-container">
       <button type="button" onClick={onToggleFavoritePostsVisible}>
         open/close
       </button>
       <div className="posts-page-container__posts-wrapper">
         <div
-          className={classnames('posts-page-container__posts', {
-            'posts-page-container__posts_fullWidth': !isFavoritePostsVisible,
-          })}
+          className={classnames(
+            {
+              'posts-page-container__posts_zero-width': isFavoritePostsVisible,
+            },
+            'posts-page-container__posts',
+            'posts-page-container__unfavorite-posts',
+          )}
         >
           <PostList />
         </div>
         <div
-          className={classnames('posts-page-container__favorite-posts', {
-            'posts-page-container__favorite-posts_zeroWidth':
-              !isFavoritePostsVisible,
-          })}
+          className={classnames(
+            {
+              'posts-page-container__posts_zero-width': !isFavoritePostsVisible,
+            },
+            'posts-page-container__posts',
+            'posts-page-container__favorite-posts',
+          )}
         >
           <FavoritePostList />
         </div>
