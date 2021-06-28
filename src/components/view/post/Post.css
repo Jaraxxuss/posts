@@ -23,7 +23,7 @@
   background-color: yellow;
 }
 
-@media only screen and (min-width: 1224px) {
+@media only screen and (min-width: 992px) {
   .post-container {
     width: 360px;
     margin-right: 8px;
