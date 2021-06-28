@@ -1,18 +1,24 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import MainLayoutRoute from '../layout-components/main-layout-route'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import MainLayout from '../layout-components'
 import HomePage from './home-page'
 import PostsPage from './posts-page'
 import NotFoundPage from './not-found-page'
 
 const RouterComponents = () => (
-  <Router>
+  <BrowserRouter>
     <Switch>
       <Route path="/" exact component={HomePage} />
-      <MainLayoutRoute path="/posts" exact component={PostsPage} />
+      <Route>
+        <MainLayout>
+          <Switch>
+            <Route path="/posts" component={PostsPage} />
+          </Switch>
+        </MainLayout>
+      </Route>
       <Route path="*" component={NotFoundPage} />
     </Switch>
-  </Router>
+  </BrowserRouter>
 )
 
 export default RouterComponents
