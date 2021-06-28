@@ -5,6 +5,10 @@ import { map } from 'lodash'
 import PostsContext from '../../context'
 import ItemList from '../../view/item-list'
 import Post from '../../view/post'
+import VisibleComponent, {
+  DEVICE_VISIBLE_COMPONENT,
+  DESKTOP_VISIBLE_COMPONENT,
+} from '../../core/visible-component'
 
 const PostsPage = () => {
   const { unfavoritePosts, favoritePosts, onToggleFavoritePost } =
@@ -41,6 +45,14 @@ const PostsPage = () => {
       <button type="button" onClick={onToggleFavoritePostsVisible}>
         open/close
       </button>
+      <VisibleComponent visibleComponentType={DESKTOP_VISIBLE_COMPONENT}>
+        <button type="button">desktop</button>
+      </VisibleComponent>
+      <VisibleComponent visibleComponentType={DEVICE_VISIBLE_COMPONENT}>
+        <button type="button" className={classnames('visibledevice')}>
+          mobile
+        </button>
+      </VisibleComponent>
       <div className="posts-page-container__posts-wrapper">
         <div
           className={classnames(
