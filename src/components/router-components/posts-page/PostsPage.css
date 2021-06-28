@@ -22,7 +22,7 @@
   display: flex;
 }
 
-@media (min-width: 720px) {
+@media only screen and (min-width: 1224px) {
   .posts-page-container__favorite-posts:not(.posts-page-container__posts_zero-width) {
     width: 25%;
   }
