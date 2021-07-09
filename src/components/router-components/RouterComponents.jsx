@@ -9,13 +9,9 @@ const RouterComponents = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={HomePage} />
-      <Route>
-        <MainLayout>
-          <Switch>
-            <Route path="/posts" component={PostsPage} />
-          </Switch>
-        </MainLayout>
-      </Route>
+      <MainLayout>
+        <Route path="/posts" component={PostsPage} />
+      </MainLayout>
       <Route path="*" component={NotFoundPage} />
     </Switch>
   </BrowserRouter>
