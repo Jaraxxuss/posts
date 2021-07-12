@@ -1,7 +1,9 @@
 import React from 'react'
 import './PostsPage.css'
 import classnames from 'classnames'
-import { map } from 'lodash'
+import { map, debounce } from 'lodash'
+import Highlight from 'react-highlighter'
+import Popup from 'reactjs-popup'
 import PostsContext from '../../context'
 import ItemList from '../../view/item-list'
 import Post from '../../view/post'
@@ -11,11 +13,46 @@ import VisibleComponent, {
 } from '../../core/visible-component'
 
 const PostsPage = () => {
-  const { unfavoritePosts, favoritePosts, onToggleFavoritePost } =
-    React.useContext(PostsContext)
+  const {
+    favoritePosts,
+    unfavoritePosts,
+    onFilterUnfavoritePosts,
+    onToggleFavoritePost,
+  } = React.useContext(PostsContext)
+
+  const debouncedOnFilterUnfavoritePosts = debounce(
+    (text) => onFilterUnfavoritePosts(text),
+    500,
+  )
 
   const [isFavoritePostsVisible, setIsFavoritePostsVisible] =
     React.useState(false)
+
+  const [inputText, setInputText] = React.useState('')
+  const [open, setOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!open) {
+      debouncedOnFilterUnfavoritePosts(inputText)
+    }
+  }, [inputText])
+
+  const onChangeInputText = (event) => {
+    setInputText(event.target.value)
+  }
+
+  const closeModal = () => {
+    setOpen(false)
+  }
+
+  const openModal = () => {
+    setOpen(true)
+  }
+
+  const onConfirmBtnPressed = () => {
+    closeModal()
+    onFilterUnfavoritePosts(inputText)
+  }
 
   const withPostList = (postsData, itemListTitle) => () =>
     (
@@ -24,9 +61,9 @@ const PostsPage = () => {
           <Post
             key={id}
             id={id}
-            body={body}
+            body={<Highlight search={inputText}>{body}</Highlight>}
             isFavorite={isFavorite}
-            title={title}
+            title={<Highlight search={inputText}>{title}</Highlight>}
             onToggleFavoritePost={onToggleFavoritePost}
           />
         ))}
@@ -46,12 +83,37 @@ const PostsPage = () => {
         open/close
       </button>
       <VisibleComponent visibleComponentType={DESKTOP_VISIBLE_COMPONENT}>
-        <button type="button">desktop</button>
+        <input type="text" value={inputText} onChange={onChangeInputText} />
       </VisibleComponent>
       <VisibleComponent visibleComponentType={DEVICE_VISIBLE_COMPONENT}>
-        <button type="button" className={classnames('visibledevice')}>
-          mobile
-        </button>
+        <div>
+          <div>
+            <button type="button" onClick={openModal}>
+              open search
+            </button>
+          </div>
+          <div>
+            <Popup open={open} modal>
+              <div>
+                <div>
+                  <input
+                    type="text"
+                    value={inputText}
+                    onChange={onChangeInputText}
+                  />
+                </div>
+                <div>
+                  <button type="button" onClick={onConfirmBtnPressed}>
+                    ok
+                  </button>
+                  <button type="button" onClick={closeModal}>
+                    close modal
+                  </button>
+                </div>
+              </div>
+            </Popup>
+          </div>
+        </div>
       </VisibleComponent>
       <div className="posts-page-container__posts-wrapper">
         <div

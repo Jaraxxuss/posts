@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 const Post = ({ title, body, id, isFavorite, onToggleFavoritePost }) => {
   const onClickFavoriteBtn = () => {
-    onToggleFavoritePost(id)
+    onToggleFavoritePost({ id, isFavorite })
   }
 
   return (
@@ -27,8 +27,8 @@ const Post = ({ title, body, id, isFavorite, onToggleFavoritePost }) => {
 
 Post.propTypes = {
   id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
+  title: PropTypes.element.isRequired,
+  body: PropTypes.element.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   onToggleFavoritePost: PropTypes.func.isRequired,
 }
